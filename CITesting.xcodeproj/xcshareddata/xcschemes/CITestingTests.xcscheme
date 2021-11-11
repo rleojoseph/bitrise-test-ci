@@ -5,6 +5,22 @@
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2A95B6D5273D0D2900D50B92"
+               BuildableName = "CITestingTests.xctest"
+               BlueprintName = "CITestingTests"
+               ReferencedContainer = "container:CITesting.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
    </BuildAction>
    <TestAction
       buildConfiguration = "Debug"
@@ -55,9 +71,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2A95B6BF273D0D2600D50B92"
-            BuildableName = "CITesting.app"
-            BlueprintName = "CITesting"
+            BlueprintIdentifier = "2A95B6D5273D0D2900D50B92"
+            BuildableName = "CITestingTests.xctest"
+            BlueprintName = "CITestingTests"
             ReferencedContainer = "container:CITesting.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
