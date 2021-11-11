@@ -13,6 +13,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@master
+    - uses: actions/setup-ruby@v1
+      with:
+        ruby-version: '2.7.2'
+    - uses: maierj/fastlane-action@v2.0.1
+      with:
+        lane: 'tests'
     - uses: codecov/codecov-action@v2
       with:
         flags: unittests # optional
