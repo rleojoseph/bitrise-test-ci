@@ -5,16 +5,16 @@ platform :ios do
   desc "Unit tests"
   lane :tests do |options|
       xcversion(version: "~> 12.4")
-      fetched_sim = sh("xcrun simctl list | grep 'Fastlane' | cat")
-      if !fetched_sim.empty?
-          sh("xcrun", "simctl", "delete", "iPhone Fastlane")
-      end
-      sh("xcrun","simctl","create","iPhone Fastlane", "com.apple.CoreSimulator.SimDeviceType.iPhone-7","com.apple.CoreSimulator.SimRuntime.iOS-13-7")
+#       fetched_sim = sh("xcrun simctl list | grep 'Fastlane' | cat")
+#       if !fetched_sim.empty?
+#           sh("xcrun", "simctl", "delete", "iPhone Fastlane")
+#       end
+#       sh("xcrun","simctl","create","iPhone Fastlane", "com.apple.CoreSimulator.SimDeviceType.iPhone-7","com.apple.CoreSimulator.SimRuntime.iOS-13-7")
       scan(
         clean: true,
         output_directory: './artifacts/unit-tests',
         scheme: 'CITestingTests',
-        device: 'iPhone Fastlane',
+        device: 'iPhone X',
         code_coverage: true,
         output_types: 'json-compilation-database,html,junit',
         output_files: 'compile_commands.json,report.html,report.junit')
