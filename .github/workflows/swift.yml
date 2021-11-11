@@ -12,6 +12,8 @@ jobs:
     runs-on: macos-latest
 
     steps:
+    - name: ruby version
+      run: ruby -v
     - uses: actions/checkout@master
     - uses: actions/setup-ruby@v1
       with:
