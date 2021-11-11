@@ -1,0 +1,33 @@
+# macos
+.DS_Store
+.LSOverride
+
+# vim
+*.swp
+
+# Xcode
+xcuserdata
+*.xccheckout
+*.xcworkspace/xcshareddata
+*.xcworkspace/xcuserdata
+*.playground
+build
+
+# Cocoapods
+Pods
+
+# Fastlane
+/artifacts
+/fastlane/report.xml
+/fastlane/README.md
+/fastlane/.env
+
+# Jazzy-generated documentation
+docs/
+
+# Use latest gem versions
+Gemfile.lock
+DerivedData
+vendor/bundle
+/certificate.pem
+/SSL-pinning.xcconfig
