@@ -12,7 +12,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Run tests
-      run: xcodebuild -scheme CITesting -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=15.2' test
+      run: xcodebuild -scheme CITesting -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=14.4' test
   ubuntu-bionic:
     runs-on: ubuntu-latest
     container:
