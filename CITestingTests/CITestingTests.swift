@@ -1,9 +1,4 @@
-//
-//  CITestingTests.swift
-//  CITestingTests
-//
-//  Created by Leo, Joseph | MTSD on 2021/11/11.
-//
+
 
 import XCTest
 @testable import CITesting
@@ -29,5 +24,19 @@ class CITestingTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-
+    func testStringToInt() {
+        let vv = ViewController()
+        let num = vv.stringToInt(string: "12")
+        XCTAssertEqual(12, num)
+    }
+    func testStringToIntWithInvalidData() {
+        let vv = ViewController()
+        let num = vv.stringToInt(string: "Leo")
+        XCTAssertEqual(0, num)
+    }
+    func testHelloWorld() {
+        let vv = ViewController()
+        let num = vv.getHelloWorld()
+        XCTAssertEqual("Hello World", num)
+    }
 }
