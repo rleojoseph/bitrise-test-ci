@@ -13,17 +13,6 @@ jobs:
       uses: actions/checkout@v2
     - name: Run tests
       run: xcodebuild -scheme CITesting -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=14.4' test
-  ubuntu-bionic:
-    runs-on: ubuntu-latest
-    container:
-      image: swift:5.3-bionic
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Build
-      run: swift build -v
-    - name: Run tests
-      run: swift test --enable-code-coverage --enable-test-discovery --sanitize=thread
     - name: Generate coverage report
       run: llvm-cov export -format="lcov" .build/debug/chaqmoq-consolePackageTests.xctest -instr-profile .build/debug/codecov/default.profdata > coverage.lcov
     - name: Upload to codecov.io
@@ -32,14 +21,3 @@ jobs:
         token: ${{ secrets.CODECOV_TOKEN }}
         flags: base64,unittests
         file: coverage.lcov
-  ubuntu-xenial:
-    runs-on: ubuntu-latest
-    container:
-      image: swift:5.3-xenial
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Build
-      run: swift build -v
-    - name: Run tests
-      run: swift test --enable-code-coverage --enable-test-discovery --sanitize=thread
