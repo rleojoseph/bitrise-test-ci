@@ -12,7 +12,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Run tests
-      run: xcodebuild -scheme CITesting -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=15.0' test
+      run: xcodebuild -scheme CITesting -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=14.4' test
     - name: Generate coverage report
       run: llvm-cov export -format="lcov" .build/debug/chaqmoq-consolePackageTests.xctest -instr-profile .build/debug/codecov/default.profdata > coverage.lcov
     - name: Upload to codecov.io
