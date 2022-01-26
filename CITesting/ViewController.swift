@@ -12,7 +12,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    
+    /// Method to print coverage info
     func showCoverageInfo() {
         print("")
     }
