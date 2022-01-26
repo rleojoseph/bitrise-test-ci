@@ -1,39 +1,47 @@
-name: Example workflow for Codecov
+name: ci
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
+  workflow_dispatch:
 jobs:
-  run:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macos-latest]
-    env:
-      OS: ${{ matrix.os }}
-      PYTHON: '3.7'
+  macos:
+    runs-on: macos-latest
     steps:
-    - uses: actions/checkout@master
-    - name: Setup Python
-      uses: actions/setup-python@master
-      with:
-        python-version: 3.7
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Build
+      run: swift build -v
+    - name: Run tests
+      run: swift test --enable-code-coverage --enable-test-discovery --sanitize=thread
+  ubuntu-bionic:
+    runs-on: ubuntu-latest
+    container:
+      image: swift:5.3-bionic
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Build
+      run: swift build -v
+    - name: Run tests
+      run: swift test --enable-code-coverage --enable-test-discovery --sanitize=thread
     - name: Generate coverage report
-      run: |
-        pip install pytest
-        pip install pytest-cov
-        pytest --cov=./ --cov-report=xml
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v2
+      run: llvm-cov export -format="lcov" .build/debug/chaqmoq-consolePackageTests.xctest -instr-profile .build/debug/codecov/default.profdata > coverage.lcov
+    - name: Upload to codecov.io
+      uses: codecov/codecov-action@v1.0.3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        directory: ./coverage/reports/
-        env_vars: OS,PYTHON
-        fail_ci_if_error: true
-        files: ./coverage1.xml,./coverage2.xml
-        flags: unittests
-        name: codecov-umbrella
-        path_to_write_report: ./coverage/codecov_report.txt
-        verbose: true
+        flags: base64,unittests
+        file: coverage.lcov
+  ubuntu-xenial:
+    runs-on: ubuntu-latest
+    container:
+      image: swift:5.3-xenial
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Build
+      run: swift build -v
+    - name: Run tests
+      run: swift test --enable-code-coverage --enable-test-discovery --sanitize=thread
