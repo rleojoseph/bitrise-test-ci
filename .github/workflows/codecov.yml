@@ -18,6 +18,5 @@ jobs:
     - name: Upload to codecov.io
       uses: codecov/codecov-action@v1.0.3
       with:
-        token: ${{ secrets.CODECOV_TOKEN }}
         flags: base64,unittests
         file: coverage.lcov
