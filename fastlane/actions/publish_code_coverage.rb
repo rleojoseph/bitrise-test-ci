@@ -17,7 +17,9 @@ module Fastlane
         code_coverage = get_code_coverage()
         UI.message "Code coverage: #{code_coverage}"
         UI.message "Getting commit SHA"
+        commit_sha = get_current_commit_sha()
         UI.message "Publishing coverage on Github"
+        publish_to_github("Code coverage: #{code_coverage}", commit_sha)
       end
 
       def self.get_code_coverage
