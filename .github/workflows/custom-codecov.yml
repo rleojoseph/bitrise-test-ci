@@ -16,8 +16,12 @@ jobs:
       env:
        destination: ${{ matrix.destination }}
     - name: Update Code Coverage
-      run: |
-        bash <(curl -s https://codecov.io/bash) -J 'bitrise-test-ci'
-    - name: Update Code Cov
-      run: |
-        bash <(curl -s https://codecov.io/bash) -J 'CITesting'
+      - uses: codecov/codecov-action@v2
+        with:
+          flags: unittests # optional
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
+
+
+
+

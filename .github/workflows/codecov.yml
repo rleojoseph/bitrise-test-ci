@@ -1,24 +1,24 @@
-name: Codecov
-on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
-  workflow_dispatch:
-jobs:
-  CodeCov_tests:
-    runs-on: macos-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Build and Text
-      run: |
-        xcodebuild clean build test -project CITesting.xcodeproj -scheme CITesting -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest'
-      env:
-       destination: ${{ matrix.destination }}
-    - name: Update Code Coverage
-      run: |
-        bash <(curl -s https://codecov.io/bash) -J 'bitrise-test-ci'
-    - name: Update Code Cov
-      run: |
-        bash <(curl -s https://codecov.io/bash) -J 'CITesting'
+# name: Codecov
+# on:
+#   push:
+#     branches: [master]
+#   pull_request:
+#     branches: [master]
+#   workflow_dispatch:
+# jobs:
+#   CodeCov_tests:
+#     runs-on: macos-latest
+#     steps:
+#     - name: Checkout
+#       uses: actions/checkout@v2
+#     - name: Build and Text
+#       run: |
+#         xcodebuild clean build test -project CITesting.xcodeproj -scheme CITesting -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest'
+#       env:
+#        destination: ${{ matrix.destination }}
+#     - name: Update Code Coverage
+#       run: |
+#         bash <(curl -s https://codecov.io/bash) -J 'bitrise-test-ci'
+#     - name: Update Code Cov
+#       run: |
+#         bash <(curl -s https://codecov.io/bash) -J 'CITesting'
