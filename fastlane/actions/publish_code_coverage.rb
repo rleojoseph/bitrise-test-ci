@@ -18,6 +18,7 @@ module Fastlane
         UI.message "Code coverage: #{code_coverage}"
         UI.message "Getting commit SHA"
         commit_sha = get_current_commit_sha()
+        UI.message "Current commit SHA: #{commit_sha}"
         UI.message "Publishing coverage on Github"
         publish_to_github("Code coverage: #{code_coverage}", commit_sha)
       end
@@ -48,7 +49,7 @@ module Fastlane
         commit_info = LastGitCommitAction.run(nil)
         commit_info[:commit_hash]
       end
-    
+
       def self.publish_to_github(message, commit_sha)
         GithubApiAction.run(
           server_url: "https://api.github.com",

@@ -11,15 +11,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Build and Text
+      - name: Build and Test
         run: |
-          xcodebuild clean build test -project CITesting.xcodeproj -derivedDataPath ${GITHUB_WORKSPACE}/final.xcresult -scheme CITesting -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest' -enableCodeCoverage YES -verbose
-          xcrun xccov view --report --json ${GITHUB_WORKSPACE}/final.xcresult
+          xcodebuild clean build test -project CITesting.xcodeproj -derivedDataPath ${GITHUB_WORKSPACE} -resultBundlePath Example.xcresult -scheme CITesting -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest' -enableCodeCoverage YES -verbose
+          xcrun xccov view --report --json ${GITHUB_WORKSPACE}/Example.xcresult
       - uses: codecov/codecov-action@v2
         with:
             fail_ci_if_error: true # optional (default = false)
             verbose: true # optional (default = false)
-
-
-
-             
