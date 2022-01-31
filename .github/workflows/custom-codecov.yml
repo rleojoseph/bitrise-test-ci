@@ -6,22 +6,18 @@ on:
     branches: [master]
   workflow_dispatch:
 jobs:
+  build:
     runs-on: macos-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Build and Text
-      run: |
-        xcodebuild clean build test -project CITesting.xcodeproj -scheme CITesting -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest' -enableCodeCoverage YES -verbose
-      env:
-       destination: ${{ matrix.destination }}
-    - name: Update Code Coverage
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and Text
+        run: |
+          xcodebuild clean build test -project CITesting.xcodeproj -scheme CITesting -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest' -enableCodeCoverage YES -verbose
+        env:
+         destination: ${{ matrix.destination }}
       - uses: codecov/codecov-action@v2
         with:
-          flags: unittests # optional
-          fail_ci_if_error: true # optional (default = false)
-          verbose: true # optional (default = false)
-
-
-
-
+            flags: unittests # optional
+            fail_ci_if_error: true # optional (default = false)
+            verbose: true # optional (default = false)
