@@ -55,7 +55,7 @@ module Fastlane
           server_url: "https://api.github.com",
           api_token: ENV["GITHUB_API_TOKEN"],
           http_method: "POST",
-          path: "/repos/rleojoseph/bitrise-test-ci/statuses/#{commit_sha}",
+          path: "/v3/repos/rleojoseph/bitrise-test-ci/statuses/#{commit_sha}",
           raw_body:"{\"state\":\"success\", \"description\": \"#{message}\", \"context\": \"coverage\"}",
           error_handlers: {
             404 => proc do |result|
