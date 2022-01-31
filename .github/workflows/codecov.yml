@@ -12,12 +12,15 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-      - name: Build and Text
-        run: |
-          cd bitrise-test-ci
-          xcodebuild clean build test -project CITesting.xcodeproj -scheme CITesting -destination "${destination}"
-        env:
-         destination: ${{ matrix.destination }}
-      - name: Update Code Coverage
-        run: |
-          bash <(curl -s https://codecov.io/bash) -J 'Texstyle'
+    - name: Build and Text
+      run: |
+        cd bitrise-test-ci
+        xcodebuild clean build test -project CITesting.xcodeproj -scheme CITesting -destination "${destination}"
+      env:
+       destination: ${{ matrix.destination }}
+    - name: Update Code Coverage
+      run: |
+        bash <(curl -s https://codecov.io/bash) -J 'bitrise-test-ci'
+    - name: Update Code Cov
+      run: |
+        bash <(curl -s https://codecov.io/bash) -J 'CITesting'
