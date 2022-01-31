@@ -7,7 +7,6 @@ on:
   workflow_dispatch:
 jobs:
   CodeCov_tests:
-    name: ${{ matrix.platform }} Tests (Xcode)
     runs-on: macos-latest
     steps:
     - name: Checkout
