@@ -12,7 +12,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Run tests
-      run: xcodebuild -scheme CITesting -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest' -enableCodeCoverage YES clean build test -verbose
+      run: xcodebuild -scheme CITesting -sdk iphonesimulator -derivedDataPath /Users/runner/Library/Developer/Xcode/DerivedData/CITesting/ -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest' -enableCodeCoverage YES clean build test -verbose | xcpretty  --report json-compilation-database --output '/Users/runner/Library/Developer/Xcode/DerivedData/CITesting/Logs/Test/compile_commands.json' --report html --output '/Users/runner/Library/Developer/Xcode/DerivedData/CITesting/Logs/Test/report.html' --report junit --output '/Users/runner/Library/Developer/Xcode/DerivedData/CITesting/Logs/Test/report.junit' --report junit --output '/Users/runner/Library/Developer/Xcode/DerivedData/CITesting/Logs/Test/' 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
       with:
