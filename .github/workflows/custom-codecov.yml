@@ -22,14 +22,10 @@ jobs:
             .build/debug/hummingbirdPackageTests.xctest \
             -ignore-filename-regex="\/Tests\/" \
             -instr-profile .build/debug/codecov/default.profdata > info.lcov
-#       - name: Setup Xcode
-#         uses: maxim-lobanov/setup-xcode@v1.4.0
-#         with:
-#           xcode-version: "13.1"
-
-#       - name: Gather code coverage
-#         run: xcrun llvm-cov export -format="lcov" .build/debug/{YOUR_PACKAGE_NAME}PackageTests.xctest/Contents/MacOS/{YOUR_PACKAGE_NAME}PackageTests -instr-profile .build/debug/codecov/default.profdata > coverage_report.lcov
-
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1.4.0
+        with:
+          xcode-version: "13.1"
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
