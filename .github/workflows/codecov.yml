@@ -12,7 +12,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Run tests
-      run: xcodebuild -scheme CITesting -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest' test
+      run: xcodebuild -scheme CITesting -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest' -enableCodeCoverage YES clean build test
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
       with:
