@@ -14,7 +14,6 @@ jobs:
       uses: actions/checkout@v2
     - name: Build and Text
       run: |
-        cd bitrise-test-ci
         xcodebuild clean build test -project CITesting.xcodeproj -scheme CITesting -destination "${destination}"
       env:
        destination: ${{ matrix.destination }}
