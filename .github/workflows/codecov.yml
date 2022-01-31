@@ -6,14 +6,18 @@ on:
     branches: [master]
   workflow_dispatch:
 jobs:
-  macos:
+  CodeCov_tests:
+    name: ${{ matrix.platform }} Tests (Xcode)
     runs-on: macos-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Run tests
-      run: set -o pipefail && xcodebuild -scheme CITesting -sdk iphonesimulator -derivedDataPath /Users/runner/Library/Developer/Xcode/DerivedData/CITesting/ -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest' -enableCodeCoverage YES clean build test -verbose | xcpretty -r "html" -o "tests.html" 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v2
-      with:
-        verbose: true
+      - name: Build and Text
+        run: |
+          cd bitrise-test-ci
+          xcodebuild clean build test -project CITesting.xcodeproj -scheme CITesting -destination "${destination}"
+        env:
+         destination: ${{ matrix.destination }}
+      - name: Update Code Coverage
+        run: |
+          bash <(curl -s https://codecov.io/bash) -J 'Texstyle'
