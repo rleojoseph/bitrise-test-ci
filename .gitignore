@@ -12,6 +12,7 @@ xcuserdata
 *.xcworkspace/xcuserdata
 *.playground
 build
+downloads
 
 # Cocoapods
 Pods
