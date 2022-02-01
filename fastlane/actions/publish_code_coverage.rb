@@ -7,9 +7,12 @@ module Fastlane
 
       def self.run(params)
         commit_sha = get_current_commit_sha()
+        UI.message "Current commit SHA: #{commit_sha}"
+        UI.message "Publishing coverage on Github"
         test_message(commit_sha)
         test_message1(commit_sha)
         test_message2(commit_sha)
+        test_message4()
       # UI.message "Generating Slather report"
       #   Actions::SlatherAction.run(
       #     scheme: 'CITesting',
@@ -87,6 +90,25 @@ module Fastlane
         end
       end
 
+      def self.test_message4()
+        GithubApiAction.run(
+          server_url: "https://api.github.com",
+          api_token: ENV["GITHUB_TOKEN"],
+          http_method: "GET",
+          path: "/repos/rleojoseph/bitrise-test-ci/README",
+          error_handlers: {
+            404 => proc do |result|
+              UI.message("Something went wrong - I couldn't find it...")
+            end,
+            '*' => proc do |result|
+              UI.message("Handle all error codes other than 404")
+            end
+          }
+        ) do |result|
+          UI.message("JSON returned: #{result[:json]}")
+        end
+      end
+      
       def self.get_code_coverage
         # Coverage file path
         current_dir = Dir.pwd
