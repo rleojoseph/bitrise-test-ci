@@ -53,7 +53,7 @@ module Fastlane
       def self.publish_to_github(message, commit_sha)
         GithubApiAction.run(
           server_url: "https://api.github.com",
-          api_token: ENV["GITHUB_API_TOKEN"],
+          api_token: ENV["GITHUB_TOKEN"],
           http_method: "POST",
           path: "/repos/rleojoseph/bitrise-test-ci/statuses/#{commit_sha}",
           raw_body:"{\"state\":\"success\", \"description\": \"#{message}\", \"context\": \"coverage\"}",
@@ -68,10 +68,6 @@ module Fastlane
         ) do |result|
           UI.message("Code coverage updated for commit #{commit_sha}")
         end
-      end
-
-      def self.is_supported?(platform)
-        platform == :ios
       end
     end
   end
