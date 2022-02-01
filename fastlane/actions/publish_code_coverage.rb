@@ -53,7 +53,8 @@ module Fastlane
       def self.test_message1(commit_sha)
         GithubApiAction.run(
           server_url: "https://api.github.com",
-          api_token: ENV["GITHUB_TOKEN"],
+          api_bearer: ENV["GITHUB_TOKEN"],
+          headers: { 'Authorization' => "Bearer #{params[:github_token]}" } # <----- this line
           http_method: "POST",
           path: "/repos/rleojoseph/bitrise-test-ci/statuses/#{commit_sha}",
           raw_body:"{\"state\":\"success\", \"description\": \"Hello World\", \"context\": \"coverage\"}",
@@ -73,7 +74,7 @@ module Fastlane
       def self.test_message2(commit_sha)
         GithubApiAction.run(
           server_url: "https://api.github.com",
-          api_token: ENV["GITHUB_TOKEN"],
+          api_bearer: ENV["GITHUB_TOKEN"],
           http_method: "POST",
           path: "/repos/rleojoseph/bitrise-test-ci/statuses/#{commit_sha}",
           raw_body:"{\"state\":\"success\"}",
