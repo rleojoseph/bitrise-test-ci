@@ -54,7 +54,7 @@ module Fastlane
         GithubApiAction.run(
           server_url: "https://api.github.com",
           api_bearer: ENV["GITHUB_TOKEN"],
-          headers: { 'Authorization' => "Bearer #{params[:github_token]}" },
+          headers: { 'Authorization' => "Bearer #{ENV["GITHUB_TOKEN"]}" },
           http_method: "POST",
           path: "/repos/rleojoseph/bitrise-test-ci/statuses/#{commit_sha}",
           raw_body:"{\"state\":\"success\", \"description\": \"Hello World\", \"context\": \"coverage\"}",
