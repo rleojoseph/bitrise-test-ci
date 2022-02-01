@@ -6,23 +6,45 @@ module Fastlane
       COVERAGE_FILE_PATH = 'fastlane/code_coverage/index.html'
 
       def self.run(params)
-        UI.message "Generating Slather report"
-        Actions::SlatherAction.run(
-          scheme: 'CITesting',
-          proj: 'CITesting.xcodeproj',
-          output_directory: "fastlane/code_coverage", 
-          html: true,
-      )
-        UI.message "Obtaining coverage number"
-        code_coverage = get_code_coverage()
-        UI.message "Code coverage: #{code_coverage}"
-        UI.message "Getting commit SHA"
         commit_sha = get_current_commit_sha()
-        UI.message "Current commit SHA: #{commit_sha}"
-        UI.message "Publishing coverage on Github"
-        publish_to_github("Code coverage: #{code_coverage}", commit_sha)
+        test_message(commit_sha)
+      # UI.message "Generating Slather report"
+      #   Actions::SlatherAction.run(
+      #     scheme: 'CITesting',
+      #     proj: 'CITesting.xcodeproj',
+      #     output_directory: "fastlane/code_coverage", 
+      #     html: true,
+      # )
+      #   UI.message "Obtaining coverage number"
+      #   code_coverage = get_code_coverage()
+      #   UI.message "Code coverage: #{code_coverage}"
+      #   UI.message "Getting commit SHA"
+      #   commit_sha = get_current_commit_sha()
+      #   UI.message "Current commit SHA: #{commit_sha}"
+      #   UI.message "Publishing coverage on Github"
+      #   publish_to_github("Code coverage: #{code_coverage}", commit_sha)
       end
 
+      def self.test_message(commit_sha)
+        GithubApiAction.run(
+          server_url: "https://api.github.com",
+          api_token: ENV["GITHUB_API_TOKEN"],
+          http_method: "POST",
+          path: "/repos/rleojoseph/bitrise-test-ci/statuses/#{commit_sha}",
+          raw_body:"{\"state\":\"success\", \"description\": \"Hello World\", \"context\": \"coverage\"}",
+          error_handlers: {
+            404 => proc do |result|
+              UI.message("Couldn't find resource: #{result[:json]}")
+            end,
+            '*' => proc do |result|
+              UI.message("Unknown error: #{result[:json]}")
+            end
+          }
+        ) do |result|
+          UI.message("Code coverage updated for commit #{commit_sha}")
+        end
+      end
+    
       def self.get_code_coverage
         # Coverage file path
         current_dir = Dir.pwd
@@ -53,7 +75,7 @@ module Fastlane
       def self.publish_to_github(message, commit_sha)
         GithubApiAction.run(
           server_url: "https://api.github.com",
-          api_token: ENV["GITHUB_TOKEN"],
+          api_token: ENV["GITHUB_API_TOKEN"],
           http_method: "POST",
           path: "/repos/rleojoseph/bitrise-test-ci/statuses/#{commit_sha}",
           raw_body:"{\"state\":\"success\", \"description\": \"#{message}\", \"context\": \"coverage\"}",
