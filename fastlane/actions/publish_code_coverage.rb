@@ -95,7 +95,7 @@ module Fastlane
           server_url: "https://api.github.com",
           api_token: ENV["GITHUB_TOKEN"],
           http_method: "GET",
-          path: "/repos/rleojoseph/bitrise-test-ci/README",
+          path: "/repos/rleojoseph/bitrise-test-ci/README.md",
           error_handlers: {
             404 => proc do |result|
               UI.message("Something went wrong - I couldn't find it...")
