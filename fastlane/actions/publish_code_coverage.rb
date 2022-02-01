@@ -102,7 +102,7 @@ module Fastlane
               UI.message("Something went wrong - I couldn't find it...")
             end,
             '*' => proc do |result|
-              UI.message("Handle all error codes other than 404")
+              UI.message("test_message4: Unknown error: #{result[:json]}")
             end
           }
         ) do |result|
