@@ -18,3 +18,4 @@ jobs:
         with:
             fail_ci_if_error: true # optional (default = false)
             verbose: true # optional (default = false)
+            disable_default_path_fixes: true
