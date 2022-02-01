@@ -99,7 +99,7 @@ module Fastlane
           path: "/repos/rleojoseph/bitrise-test-ci/README.md",
           error_handlers: {
             404 => proc do |result|
-              UI.message("Something went wrong - I couldn't find it...")
+              UI.message("test_message5 Something went wrong - I couldn't find it... #{result[:json]}")
             end,
             '*' => proc do |result|
               UI.message("test_message4: Unknown error: #{result[:json]}")
@@ -110,6 +110,25 @@ module Fastlane
         end
       end
       
+      def self.test_message5()
+        GithubApiAction.run(
+          server_url: "https://api.github.com",
+          api_token: ENV["GITHUB_TOKEN"],
+          http_method: "GET",
+          path: "/repos/rleojoseph/bitrise-test-ci/bitrise-test-ci/README.md",
+          error_handlers: {
+            404 => proc do |result|
+              UI.message("test_message5 Something went wrong - I couldn't find it...")
+            end,
+            '*' => proc do |result|
+              UI.message("test_message5 : Unknown error: #{result[:json]}")
+            end
+          }
+        ) do |result|
+          UI.message("JSON returned: #{result[:json]}")
+        end
+      end
+
       def self.get_code_coverage
         # Coverage file path
         current_dir = Dir.pwd
