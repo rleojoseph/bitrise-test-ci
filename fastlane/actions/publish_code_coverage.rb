@@ -11,7 +11,7 @@ module Fastlane
           scheme: 'CITesting',
           proj: 'CITesting.xcodeproj',
           output_directory: "fastlane/code_coverage", 
-          json: true,
+          html: true,
       )
         UI.message "Obtaining coverage number"
         code_coverage = get_code_coverage()
