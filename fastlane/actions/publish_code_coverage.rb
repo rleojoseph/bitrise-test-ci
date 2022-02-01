@@ -69,6 +69,10 @@ module Fastlane
           UI.message("Code coverage updated for commit #{commit_sha}")
         end
       end
+
+      def self.is_supported?(platform)
+        platform == :ios
+      end
     end
   end
 end
