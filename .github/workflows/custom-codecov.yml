@@ -16,6 +16,6 @@ jobs:
           xcodebuild clean build test -project CITesting.xcodeproj -derivedDataPath ${GITHUB_WORKSPACE} -resultBundlePath Example.xcresult -scheme CITesting -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest' -enableCodeCoverage YES -verbose | xcpretty --report junit --output ${GITHUB_WORKSPACE}/report.xml
       - uses: codecov/codecov-action@v2
         with:
-            fail_ci_if_error: true # optional (default = false)
-            verbose: true # optional (default = false)
+            fail_ci_if_error: true
+            verbose: true
             disable_default_path_fixes: true
