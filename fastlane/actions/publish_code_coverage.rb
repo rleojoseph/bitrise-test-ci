@@ -99,7 +99,7 @@ module Fastlane
           path: "/repos/rleojoseph/bitrise-test-ci/README.md",
           error_handlers: {
             404 => proc do |result|
-              UI.message("test_message5 Something went wrong - I couldn't find it... #{result[:json]}")
+              UI.message("test_message4 Something went wrong - I couldn't find it... #{result[:json]}")
             end,
             '*' => proc do |result|
               UI.message("test_message4: Unknown error: #{result[:json]}")
@@ -118,7 +118,7 @@ module Fastlane
           path: "/repos/rleojoseph/bitrise-test-ci/bitrise-test-ci/README.md",
           error_handlers: {
             404 => proc do |result|
-              UI.message("test_message5 Something went wrong - I couldn't find it...")
+              UI.message("test_message5 Something went wrong - I couldn't find it...#{result[:json]}")
             end,
             '*' => proc do |result|
               UI.message("test_message5 : Unknown error: #{result[:json]}")
