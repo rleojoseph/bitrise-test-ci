@@ -6,21 +6,127 @@ module Fastlane
       COVERAGE_FILE_PATH = 'fastlane/code_coverage/index.html'
 
       def self.run(params)
-        UI.message "Generating Slather report"
-        Actions::SlatherAction.run(
-          scheme: 'CITesting',
-          proj: 'CITesting.xcodeproj',
-          output_directory: "fastlane/code_coverage", 
-          json: true,
-      )
-        UI.message "Obtaining coverage number"
-        code_coverage = get_code_coverage()
-        UI.message "Code coverage: #{code_coverage}"
-        UI.message "Getting commit SHA"
         commit_sha = get_current_commit_sha()
         UI.message "Current commit SHA: #{commit_sha}"
         UI.message "Publishing coverage on Github"
-        publish_to_github("Code coverage: #{code_coverage}", commit_sha)
+        # test_message(commit_sha)
+        # test_message1(commit_sha)
+        # test_message2(commit_sha)
+        # test_message4()
+      # UI.message "Generating Slather report"
+      #   Actions::SlatherAction.run(
+      #     scheme: 'CITesting',
+      #     proj: 'CITesting.xcodeproj',
+      #     output_directory: "fastlane/code_coverage", 
+      #     html: true,
+      # )
+      #   UI.message "Obtaining coverage number"
+      #   code_coverage = get_code_coverage()
+      #   UI.message "Code coverage: #{code_coverage}"
+      #   UI.message "Getting commit SHA"
+      #   commit_sha = get_current_commit_sha()
+      #   UI.message "Current commit SHA: #{commit_sha}"
+      #   UI.message "Publishing coverage on Github"
+      #   publish_to_github("Code coverage: #{code_coverage}", commit_sha)
+      end
+
+      def self.test_message(commit_sha)
+        GithubApiAction.run(
+          server_url: "https://api.github.com",
+          api_token: ENV["GITHUB_API_TOKEN"],
+          http_method: "POST",
+          path: "/repos/rleojoseph/bitrise-test-ci/statuses/#{commit_sha}",
+          raw_body:"{\"state\":\"success\", \"description\": \"Hello World\", \"context\": \"coverage\"}",
+          error_handlers: {
+            404 => proc do |result|
+              UI.message("Couldn't find resource: #{result[:json]}")
+            end,
+            '*' => proc do |result|
+              UI.message("Unknown error: #{result[:json]}")
+            end
+          }
+        ) do |result|
+          UI.message("Code coverage updated for commit #{commit_sha}")
+        end
+      end
+    
+      def self.test_message1(commit_sha)
+        GithubApiAction.run(
+          server_url: "https://api.github.com",
+          api_bearer: ENV["GITHUB_TOKEN"],
+          headers: { 'Authorization' => "Bearer #{ENV["GITHUB_TOKEN"]}" },
+          http_method: "POST",
+          path: "/repos/rleojoseph/bitrise-test-ci/statuses/#{commit_sha}",
+          raw_body:"{\"state\":\"success\", \"description\": \"Hello World\", \"context\": \"coverage\"}",
+          error_handlers: {
+            404 => proc do |result|
+              UI.message("Couldn't find resource: #{result[:json]}")
+            end,
+            '*' => proc do |result|
+              UI.message("Unknown error: #{result[:json]}")
+            end
+          }
+        ) do |result|
+          UI.message("Code coverage updated for commit #{commit_sha}")
+        end
+      end
+      
+      def self.test_message2(commit_sha)
+        GithubApiAction.run(
+          server_url: "https://api.github.com",
+          api_bearer: ENV["GITHUB_TOKEN"],
+          http_method: "POST",
+          path: "/repos/rleojoseph/bitrise-test-ci/statuses/#{commit_sha}",
+          raw_body:"{\"state\":\"success\"}",
+          error_handlers: {
+            404 => proc do |result|
+              UI.message("Couldn't find resource: #{result[:json]}")
+            end,
+            '*' => proc do |result|
+              UI.message("Unknown error: #{result[:json]}")
+            end
+          }
+        ) do |result|
+          UI.message("Code coverage updated for commit #{commit_sha}")
+        end
+      end
+
+      def self.test_message4()
+        GithubApiAction.run(
+          server_url: "https://api.github.com",
+          api_token: ENV["GITHUB_TOKEN"],
+          http_method: "GET",
+          path: "/repos/rleojoseph/bitrise-test-ci/README.md",
+          error_handlers: {
+            404 => proc do |result|
+              UI.message("test_message4 Something went wrong - I couldn't find it... #{result[:json]}")
+            end,
+            '*' => proc do |result|
+              UI.message("test_message4: Unknown error: #{result[:json]}")
+            end
+          }
+        ) do |result|
+          UI.message("JSON returned: #{result[:json]}")
+        end
+      end
+      
+      def self.test_message5()
+        GithubApiAction.run(
+          server_url: "https://api.github.com",
+          api_token: ENV["GITHUB_TOKEN"],
+          http_method: "GET",
+          path: "/repos/rleojoseph/bitrise-test-ci/bitrise-test-ci/README.md",
+          error_handlers: {
+            404 => proc do |result|
+              UI.message("test_message5 Something went wrong - I couldn't find it...#{result[:json]}")
+            end,
+            '*' => proc do |result|
+              UI.message("test_message5 : Unknown error: #{result[:json]}")
+            end
+          }
+        ) do |result|
+          UI.message("JSON returned: #{result[:json]}")
+        end
       end
 
       def self.get_code_coverage
@@ -55,7 +161,7 @@ module Fastlane
           server_url: "https://api.github.com",
           api_token: ENV["GITHUB_API_TOKEN"],
           http_method: "POST",
-          path: "/v3/repos/rleojoseph/bitrise-test-ci/statuses/#{commit_sha}",
+          path: "/repos/rleojoseph/bitrise-test-ci/statuses/#{commit_sha}",
           raw_body:"{\"state\":\"success\", \"description\": \"#{message}\", \"context\": \"coverage\"}",
           error_handlers: {
             404 => proc do |result|

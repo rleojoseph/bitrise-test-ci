@@ -1,18 +1,5 @@
 ignore:
    - "Pods"
    - "Tests"
-
-coverage:
-  status:
-    patch:
-      default:
-        target: 30%
-        threshold: 5%
-        base: auto 
-        if_ci_failed: error
-    project:
-      default:
-        target: 30%
-        threshold: 5%
-        base: auto
-        if_ci_failed: error
+codecov:
+  disable_default_path_fixes: no
