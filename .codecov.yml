@@ -2,4 +2,4 @@ ignore:
    - "Pods"
    - "Tests"
 codecov:
-  disable_default_path_fixes: no
+  disable_default_path_fixes: true
