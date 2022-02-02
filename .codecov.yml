@@ -1,7 +1,8 @@
 ignore:
    - "Pods"
    - "Tests"
-
+codecov:
+  disable_default_path_fixes: no
 coverage:
   status:
     patch:
