@@ -13,9 +13,10 @@ jobs:
         uses: actions/checkout@v2
       - name: Build and Test
         run: |
-          xcodebuild clean build test -project CITesting.xcodeproj -derivedDataPath ${GITHUB_WORKSPACE} -resultBundlePath Example.xcresult -scheme CITesting -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest' -enableCodeCoverage YES -verbose | xcpretty --report junit --output ${GITHUB_WORKSPACE}/report.xml
+          mkdir test-reports
+          xcodebuild clean build test -project CITesting.xcodeproj -derivedDataPath ${GITHUB_WORKSPACE}/test-reports/ -resultBundlePath Example.xcresult -scheme CITesting -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest' -enableCodeCoverage YES -verbose | xcpretty --report junit --output ${GITHUB_WORKSPACE}/test-reports/report.xml --report junit --output ${GITHUB_WORKSPACE}/test-reports/report.junit
       - uses: codecov/codecov-action@v2
         with:
             fail_ci_if_error: true
             verbose: true
-            disable_default_path_fixes: true
+            directory: ${GITHUB_WORKSPACE}/test-reports/
