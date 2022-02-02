@@ -13,13 +13,13 @@ module Fastlane
         # test_message1(commit_sha)
         # test_message2(commit_sha)
         # test_message4()
-      # UI.message "Generating Slather report"
-      #   Actions::SlatherAction.run(
-      #     scheme: 'CITesting',
-      #     proj: 'CITesting.xcodeproj',
-      #     output_directory: "fastlane/code_coverage", 
-      #     html: true,
-      # )
+      UI.message "Generating Slather report"
+        Actions::SlatherAction.run(
+          scheme: 'CITesting',
+          proj: 'CITesting.xcodeproj',
+          output_directory: "fastlane/code_coverage", 
+          json: true,
+      )
       #   UI.message "Obtaining coverage number"
       #   code_coverage = get_code_coverage()
       #   UI.message "Code coverage: #{code_coverage}"
