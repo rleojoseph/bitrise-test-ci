@@ -9,10 +9,10 @@ module Fastlane
         commit_sha = get_current_commit_sha()
         UI.message "Current commit SHA: #{commit_sha}"
         UI.message "Publishing coverage on Github"
-        test_message(commit_sha)
-        test_message1(commit_sha)
-        test_message2(commit_sha)
-        test_message4()
+        # test_message(commit_sha)
+        # test_message1(commit_sha)
+        # test_message2(commit_sha)
+        # test_message4()
       # UI.message "Generating Slather report"
       #   Actions::SlatherAction.run(
       #     scheme: 'CITesting',
