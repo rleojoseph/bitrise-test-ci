@@ -34,7 +34,7 @@ jobs:
           name: List Artifacts
           command: ls -l artifacts
       - persist_to_workspace:
-            root: cached
+            root: .
             paths:
               - artifacts/*
       - persist_to_workspace:
