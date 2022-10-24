@@ -28,8 +28,11 @@ jobs:
           name: Print PWD
           command: pwd
       - run:
-          name: Print PWD
+          name: List Folders
           command: ls -l
+      - run:
+          name: List Artifacts
+          command: ls -l artifacts
       - persist_to_workspace:
             root: artifacts
             paths:
@@ -44,13 +47,16 @@ jobs:
           name: Print PWD
           command: pwd
       - run:
-          name: Print PWD
+          name: List Folders
           command: ls -l
       - run:
-          name: Print PWD
+          name: List Artifacts
           command: ls -l artifacts
 
 workflows:
   ci-test-workflow:
     jobs:
       - build-sim
+      - check_cache:
+          requires:
+            - build-sim
