@@ -2,6 +2,12 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+orbs:
+  node: circleci/node@4.7.0
+  gh: circleci/github-cli@1.0.4
+  macos: circleci/macos@2
+  ruby: circleci/ruby@1.2.0
+
 container_medium: &container_medium
   macos:
     xcode: 13.2.1
