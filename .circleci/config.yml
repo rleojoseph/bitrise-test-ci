@@ -40,7 +40,7 @@ jobs:
       - persist_to_workspace:
             root: sample
             paths:
-              - .
+              - sample
   
   check_cache:
     <<: *container_medium
