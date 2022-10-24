@@ -21,6 +21,7 @@ jobs:
       FASTLANE_LANE: start_building
     steps:
       - checkout
+      - run: mkdir -p deploy-scripts
       - run:
           name: Build Simulator
           command: fastlane start_building
@@ -38,7 +39,7 @@ jobs:
             paths:
               - artifacts/*
       - persist_to_workspace:
-            root: .
+            root: deploy-scripts
             paths:
               - sample/*
   
