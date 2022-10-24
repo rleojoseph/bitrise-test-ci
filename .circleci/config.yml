@@ -39,9 +39,9 @@ jobs:
             paths:
               - artifacts/*
       - persist_to_workspace:
-            root: sample/GOT.jpeg
+            root: sample/
             paths:
-              - sample/*
+              - sample/GOT.jpeg
   check_cache:
     <<: *container_medium
     steps:
