@@ -24,12 +24,33 @@ jobs:
       - run:
           name: Build Simulator
           command: fastlane start_building
+      - run:
+          name: Print PWD
+          command: pwd
+      - run:
+          name: Print PWD
+          command: ls -l
       - persist_to_workspace:
             root: artifacts
             paths:
               - .
+  
+  check_cache:
+    <<: *container_medium
+    steps:
+      - attach_workspace:
+          at: ./artifacts
+      - run:
+          name: Print PWD
+          command: pwd
+      - run:
+          name: Print PWD
+          command: ls -l
+      - run:
+          name: Print PWD
+          command: ls -l artifacts
 
 workflows:
-  say-hello-workflow:
+  ci-test-workflow:
     jobs:
       - build-sim
