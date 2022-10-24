@@ -34,13 +34,13 @@ jobs:
           name: List Artifacts
           command: ls -l artifacts
       - persist_to_workspace:
-            root: artifacts
+            root: cached
             paths:
-              - .
+              - artifacts/*
       - persist_to_workspace:
-            root: sample
+            root: .
             paths:
-              - script
+              - sample/*
   
   check_cache:
     <<: *container_medium
@@ -55,10 +55,10 @@ jobs:
           command: ls -l
       - run:
           name: List Artifacts
-          command: ls -l artifacts
+          command: ls -l cached
       - run:
           name: List sample folder
-          command: ls -l script
+          command: ls -l sample
 workflows:
   ci-test-workflow:
     jobs:
