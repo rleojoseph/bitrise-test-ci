@@ -39,7 +39,7 @@ jobs:
             paths:
               - artifacts/*
       - persist_to_workspace:
-            root: deploy-scripts
+            root: sample/GOT.jpeg
             paths:
               - sample/*
   check_cache:
