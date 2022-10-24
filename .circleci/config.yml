@@ -55,7 +55,7 @@ jobs:
           command: ls -l
       - run:
           name: List Artifacts
-          command: ls -l cached
+          command: ls -l artifacts
       - run:
           name: List sample folder
           command: ls -l sample
