@@ -39,7 +39,7 @@ jobs:
             paths:
               - artifacts/*
       - persist_to_workspace:
-            root: sample/
+            root: .
             paths:
               - sample/GOT.jpeg
   check_cache:
