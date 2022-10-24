@@ -40,7 +40,7 @@ jobs:
       - persist_to_workspace:
             root: sample
             paths:
-              - sample
+              - script
   
   check_cache:
     <<: *container_medium
@@ -58,7 +58,7 @@ jobs:
           command: ls -l artifacts
       - run:
           name: List sample folder
-          command: ls -l sample
+          command: ls -l script
 workflows:
   ci-test-workflow:
     jobs:
