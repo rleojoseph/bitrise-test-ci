@@ -60,7 +60,6 @@ jobs:
             destination: artifact-file              
   check_cache:
     <<: *container_medium
-    context: prod-ctx
     steps:
       - attach_workspace:
           at: ./artifacts
@@ -103,5 +102,6 @@ workflows:
     jobs:
       - build-sim
       - check_cache:
+          context: prod-ctx
           requires:
             - build-sim
