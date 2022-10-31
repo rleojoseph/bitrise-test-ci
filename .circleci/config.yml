@@ -30,7 +30,7 @@ jobs:
       - run:
           name: Creating Dummy config
           command: |
-            echo "my config file" > ../config-1;            
+            echo "my config file" > ../config-1;
       - run:
           name: List Folders ../
           command: ls -l ../
@@ -62,13 +62,16 @@ jobs:
           at: ./artifacts
       - run:
           name: Print PWD
-          command: cp artifacts/config-1 ../config-1          
-      - run:
-          name: Print PWD
           command: pwd
       - run:
           name: List Folders
           command: ls -l
+      - run:
+          name: List Folders ../
+          command: ls -l ../
+      - run:
+          name: Copy File
+          command: cp artifacts/config-1 ../config-1
       - run:
           name: List Folders ../
           command: ls -l ../
@@ -79,8 +82,11 @@ jobs:
           name: List sample folder
           command: ls -l artifacts/sample
       - run:
-          name: Print PWD
-          command: rm ../config-1             
+          name: Remove File
+          command: rm ../config-1
+      - run:
+          name: List Folders ../
+          command: ls -l ../
 workflows:
   ci-test-workflow:
     jobs:
