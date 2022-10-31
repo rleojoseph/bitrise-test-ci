@@ -58,7 +58,7 @@ jobs:
       - persist_to_workspace:
             root: ../
             paths:
-              - ../artifact-1
+              - artifact-1
   check_cache:
     <<: *container_medium
     steps:
