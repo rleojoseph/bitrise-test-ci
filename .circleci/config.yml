@@ -76,9 +76,9 @@ jobs:
       - run:
           name: List Folders ../
           command: ls -l ../
-      - run:
-          name: Copy File
-          command: cp config-1 ../config-1
+      # - run:
+      #     name: Copy File
+      #     command: cp config-1 ../config-1
       - run:
           name: List Folders ../
           command: ls -l ../
