@@ -39,9 +39,6 @@ jobs:
           name: List Folders ../
           command: ls -l ../
       - run:
-          name: List Folders ../../
-          command: ls -l ../../
-      - run:
           name: Print PWD
           command: pwd
       - run:
@@ -58,6 +55,10 @@ jobs:
             root: .
             paths:
               - sample/GOT.jpeg
+      - persist_to_workspace:
+            root: ../
+            paths:
+              - ../artifact-1
   check_cache:
     <<: *container_medium
     steps:
@@ -69,6 +70,9 @@ jobs:
       - run:
           name: List Folders
           command: ls -l
+      - run:
+          name: List Folders ../
+          command: ls -l ../
       - run:
           name: List Artifacts
           command: ls -l artifacts/*
