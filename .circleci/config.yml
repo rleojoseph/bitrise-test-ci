@@ -28,6 +28,20 @@ jobs:
           name: Build Simulator
           command: fastlane start_building
       - run:
+          name: Creating Dummy Artifacts
+          command: |
+            echo "my artifact file" > ./../artifact-1;
+      - run:
+          name: Creating Dummy Artifacts
+          command: |
+            echo "my artifact file" > ../artifact-1;            
+      - run:
+          name: List Folders ../
+          command: ls -l ../
+      - run:
+          name: List Folders ../../
+          command: ls -l ../../
+      - run:
           name: Print PWD
           command: pwd
       - run:
