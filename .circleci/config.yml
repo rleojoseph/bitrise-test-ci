@@ -62,6 +62,9 @@ jobs:
           at: ./artifacts
       - run:
           name: Print PWD
+          command: cp artifacts/config-1 ../config-1          
+      - run:
+          name: Print PWD
           command: pwd
       - run:
           name: List Folders
@@ -75,6 +78,9 @@ jobs:
       - run:
           name: List sample folder
           command: ls -l artifacts/sample
+      - run:
+          name: Print PWD
+          command: rm ../config-1             
 workflows:
   ci-test-workflow:
     jobs:
