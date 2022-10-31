@@ -30,7 +30,7 @@ jobs:
       - run:
           name: Creating Dummy config
           command: |
-            echo "my config file" > ../config-1;
+            echo $TEST > ../config-1;
       - run:
           name: List Folders ../
           command: ls -l ../
@@ -55,11 +55,19 @@ jobs:
             root: ../
             paths:
               - config-1
+      - store_artifacts:
+            path: ../config-1
+            destination: artifact-file              
   check_cache:
     <<: *container_medium
+    context: prod-ctx
     steps:
       - attach_workspace:
           at: ./artifacts
+      - run:
+          name: Creating Dummy config
+          command: |
+            echo $TEST > config-2;          
       - run:
           name: Print PWD
           command: pwd
@@ -71,7 +79,7 @@ jobs:
           command: ls -l ../
       - run:
           name: Copy File
-          command: cp artifacts/config-1 ../config-1
+          command: cp config-1 ../config-1
       - run:
           name: List Folders ../
           command: ls -l ../
@@ -87,6 +95,9 @@ jobs:
       - run:
           name: List Folders ../
           command: ls -l ../
+      - store_artifacts:
+            path: config-2
+            destination: artifact-file           
 workflows:
   ci-test-workflow:
     jobs:
