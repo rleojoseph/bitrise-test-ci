@@ -45,7 +45,7 @@ jobs:
           command: ls -l artifacts
       - run:
           name: List Artifacts
-          command: rm ../test.txt
+          command: rm ../test.txt || true
       - persist_to_workspace:
             root: .
             paths:
