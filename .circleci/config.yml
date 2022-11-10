@@ -44,8 +44,11 @@ jobs:
           name: List Artifacts
           command: ls -l artifacts
       - run:
-          name: List Artifacts
-          command: rm ../test.txt || true
+          name: Remove unknown file
+          command: rm ../test.txt
+      - run:
+          name: Remove Unknow file
+          command: rm ../test.txt || true       
       - persist_to_workspace:
             root: .
             paths:
