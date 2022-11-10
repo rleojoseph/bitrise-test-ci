@@ -48,6 +48,7 @@ jobs:
           command: rm ../test.txt
       - run:
           name: Remove Unknow file
+          when: always
           command: rm ../test.txt || true       
       - persist_to_workspace:
             root: .
