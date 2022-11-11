@@ -24,9 +24,6 @@ jobs:
       - run: mkdir -p deploy-scripts
       - run: echo $CIRCLE_BUILD_NUM
       - run: echo $CIRCLE_PR_NUMBER
-      - run: echo $TEST
-      - run: echo ${TEST_S1}
-      - run: echo ${TEST_S2}
       - run:
           name: Build Simulator
           command: fastlane start_building
@@ -34,6 +31,14 @@ jobs:
           name: Creating Dummy config
           command: |
             echo $TEST > ../config-1;
+      - run:
+          name: Creating Dummy config
+          command: |
+            echo $TEST_S1 > ../config-2;
+      - run:
+          name: Creating Dummy config
+          command: |
+            echo $TEST_S2 > ../config-3;
       - run:
           name: List Folders ../
           command: ls -l ../
@@ -48,11 +53,11 @@ jobs:
           command: ls -l artifacts
       - run:
           name: Remove unknown file
-          command: rm ../test.txt
+          command: rm ../test.txt  || true
       - run:
           name: Remove Unknow file
           when: always
-          command: rm ../test.txt || true       
+          command: rm ../test.txt || true
       - persist_to_workspace:
             root: .
             paths:
@@ -67,7 +72,13 @@ jobs:
               - config-1
       - store_artifacts:
             path: ../config-1
-            destination: artifact-file              
+            destination: artifact-file
+      - store_artifacts:
+            path: ../config-2
+            destination: artifact-file2
+      - store_artifacts:
+            path: ../config-3
+            destination: artifact-file3                   
   check_cache:
     <<: *container_medium
     steps:
@@ -76,7 +87,7 @@ jobs:
       - run:
           name: Creating Dummy config
           command: |
-            echo $TEST > config-2;          
+            echo $TEST > config-2;
       - run:
           name: Print PWD
           command: pwd
@@ -106,7 +117,7 @@ jobs:
           command: ls -l ../
       - store_artifacts:
             path: config-2
-            destination: artifact-file           
+            destination: artifact-file
 workflows:
   ci-test-workflow:
     jobs:
