@@ -25,8 +25,8 @@ jobs:
       - run: echo $CIRCLE_BUILD_NUM
       - run: echo $CIRCLE_PR_NUMBER
       - run: echo $TEST
-      - run: echo $TEST_S1
-      - run: echo $TEST_S2
+      - run: echo ${TEST_S1}
+      - run: echo ${TEST_S2}
       - run:
           name: Build Simulator
           command: fastlane start_building
