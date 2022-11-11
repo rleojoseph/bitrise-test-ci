@@ -40,6 +40,14 @@ jobs:
           command: |
             echo $TEST_S2 > ../config-3;
       - run:
+          name: Creating Dummy config
+          command: |
+            echo $TEST_S3 > ../config-4;
+      - run:
+          name: Creating Dummy config
+          command: |
+            echo $TEST_S4 > ../config-5;
+      - run:
           name: List Folders ../
           command: ls -l ../
       - run:
@@ -78,7 +86,13 @@ jobs:
             destination: artifact-file2
       - store_artifacts:
             path: ../config-3
-            destination: artifact-file3                   
+            destination: artifact-file3
+      - store_artifacts:
+            path: ../config-4
+            destination: artifact-file4
+      - store_artifacts:
+            path: ../config-5
+            destination: artifact-file5
   check_cache:
     <<: *container_medium
     steps:
