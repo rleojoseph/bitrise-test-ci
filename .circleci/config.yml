@@ -14,6 +14,19 @@ container_medium: &container_medium
   resource_class: medium
 
 jobs:
+
+  test-script:
+    <<: *container_medium
+    environment:
+      FL_OUTPUT_DIR: output
+      FASTLANE_LANE: start_building
+    steps:
+      - checkout
+      - run:
+          name: Deploy to AppCenter
+          no_output_timeout: 30m
+          command: ./scripts/test.sh -prefix Hello -group-name $GROUP_NAME
+
   build-sim:
     <<: *container_medium
     environment:
@@ -71,32 +84,32 @@ jobs:
           when: always
           command: rm ../test.txt || true
       - persist_to_workspace:
-            root: .
-            paths:
-              - artifacts/*
+          root: .
+          paths:
+            - artifacts/*
       - persist_to_workspace:
-            root: .
-            paths:
-              - sample/GOT.jpeg
+          root: .
+          paths:
+            - sample/GOT.jpeg
       - persist_to_workspace:
-            root: ../
-            paths:
-              - config-1
+          root: ../
+          paths:
+            - config-1
       - store_artifacts:
-            path: ../config-1
-            destination: artifact-file
+          path: ../config-1
+          destination: artifact-file
       - store_artifacts:
-            path: ../config-2
-            destination: artifact-file2
+          path: ../config-2
+          destination: artifact-file2
       - store_artifacts:
-            path: ../config-3
-            destination: artifact-file3
+          path: ../config-3
+          destination: artifact-file3
       - store_artifacts:
-            path: ../config-4
-            destination: artifact-file4
+          path: ../config-4
+          destination: artifact-file4
       - store_artifacts:
-            path: ../config-5
-            destination: artifact-file5
+          path: ../config-5
+          destination: artifact-file5
   check_cache:
     <<: *container_medium
     steps:
@@ -134,13 +147,14 @@ jobs:
           name: List Folders ../
           command: ls -l ../
       - store_artifacts:
-            path: config-2
-            destination: artifact-file
+          path: config-2
+          destination: artifact-file
 workflows:
   ci-test-workflow:
     jobs:
-      - build-sim
-      - check_cache:
-          context: prod-ctx
-          requires:
-            - build-sim
+      # - build-sim
+      # - check_cache:
+      #     context: prod-ctx
+      #     requires:
+      #       - build-sim
+      - test-script
