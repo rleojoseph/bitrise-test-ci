@@ -24,6 +24,7 @@ while getopts ":t:build-prefix:app-center-group:dhas" opt; do
     prefix) PREFIX="$OPTARG"
     ;;
     group-name) GROUP_NAME="$OPTARG"
+    ;;
     d) set -ex
     ;;
     h) show_help; exit 0
