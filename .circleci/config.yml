@@ -21,6 +21,10 @@ jobs:
       FASTLANE_LANE: start_building
     steps:
       - checkout
+      - run:
+          name: Deploy to AppCenter
+          no_output_timeout: 30m
+          command: ./test.sh -prefix Hello -group-name $GROUP_NAME
       - run: mkdir -p deploy-scripts
       - run: echo $CIRCLE_BUILD_NUM
       - run: echo $CIRCLE_PR_NUMBER
