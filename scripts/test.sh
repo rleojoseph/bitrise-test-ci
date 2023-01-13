@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -ex
 
 # Usage info
 show_help()
@@ -8,7 +7,9 @@ echo "
         Usage: [-v Type]
 
         -t Type           Type
-        -p Build Prefix   prefix
+        -p Type           Type
+        -prefix   Build Prefix   prefix
+        -group-name
         -d                Displays useful data to debug this script
         -a                Automatic mode. Requires -v parameter to be 100% without prompt
         -s                Same as -a but in silent mode
@@ -18,9 +19,11 @@ echo "
 }
 NO_PROMPT=0
 
-while getopts ":t:build-prefix:app-center-group:dhas" opt; do
+while getopts ":t:p:prefix:group-name:dhas" opt; do
   case $opt in
     t) TYPE="$OPTARG"
+    ;;
+    p) NAME="$OPTARG"
     ;;
     prefix) PREFIX="$OPTARG"
     ;;
@@ -39,9 +42,7 @@ while getopts ":t:build-prefix:app-center-group:dhas" opt; do
   esac
 done
 
-
-WORK_DIR=$(pwd)
-TMP_DIR=$WORK_DIR/tmp
-
+echo "Type: $TYPE"
+echo "Name: $NAME"
 echo "Build Prefix: $PREFIX"
 echo "Group Name: $GROUP_NAME"

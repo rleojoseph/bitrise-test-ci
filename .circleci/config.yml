@@ -25,7 +25,7 @@ jobs:
       - run:
           name: Deploy to AppCenter
           no_output_timeout: 30m
-          command: ./scripts/test.sh -prefix Hello
+          command: ./scripts/test.sh -p Hello -t $GROUP_NAME
 
   build-sim:
     <<: *container_medium
