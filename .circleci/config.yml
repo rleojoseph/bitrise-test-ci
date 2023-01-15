@@ -171,5 +171,5 @@ workflows:
       #     context: prod-ctx
       #     requires:
       #       - build-sim
-      - test-script
-            Name: "STG"
+      - test-script:
+          Name: "STG"
