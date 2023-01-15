@@ -172,3 +172,4 @@ workflows:
       #     requires:
       #       - build-sim
       - test-script
+            Name: "STG"
