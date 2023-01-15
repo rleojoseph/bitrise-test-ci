@@ -41,15 +41,3 @@ while getopts ":t:p:prefix:group-name:dhas" opt; do
     ;;
   esac
 done
-
-echo "Type: $TYPE"
-echo "Name: $NAME"
-echo "Build Prefix: $PREFIX"
-echo "Group Name: $GROUP_NAME"
-
-shopt -s nocasematch
-if [[ "$GROUP_NAME" == "JAPAN" ]]; then
-  echo "Fetching success"
-else
-  echo "Fetching failed"
-fi

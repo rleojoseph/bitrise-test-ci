@@ -17,15 +17,33 @@ jobs:
 
   test-script:
     <<: *container_medium
-    environment:
-      FL_OUTPUT_DIR: output
-      FASTLANE_LANE: start_building
+    parameters:
+      Name:
+        type: string
+        default: $GROUP_NAME
+      Country:
+        type: string
+        default: $COUNTRY
     steps:
       - checkout
       - run:
-          name: Deploy to AppCenter
+          name: Deploy
           no_output_timeout: 30m
           command: ./scripts/test.sh -p Hello -t $GROUP_NAME
+      - run:
+          name: Creating Dummy config
+          command: |
+            echo $<< parameters.Name >> > ../config-1;
+      - run:
+          name: Creating Dummy config
+          command: |
+            echo $<< parameters.Country >> > ../config-2;
+      - store_artifacts:
+          path: ../config-1
+          destination: artifact-file1
+      - store_artifacts:
+          path: ../config-2
+          destination: artifact-file2
 
   build-sim:
     <<: *container_medium
@@ -34,10 +52,6 @@ jobs:
       FASTLANE_LANE: start_building
     steps:
       - checkout
-      - run:
-          name: Deploy to AppCenter
-          no_output_timeout: 30m
-          command: ./test.sh -prefix Hello -group-name $GROUP_NAME
       - run: mkdir -p deploy-scripts
       - run: echo $CIRCLE_BUILD_NUM
       - run: echo $CIRCLE_PR_NUMBER
