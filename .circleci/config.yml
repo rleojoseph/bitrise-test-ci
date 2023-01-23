@@ -183,11 +183,6 @@ workflows:
       - test-script:
           name: "Script Name"
           Name: "STG"
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
       - tag-script:
           name: "Tag Script"
           filters:
