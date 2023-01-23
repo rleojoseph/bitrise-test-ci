@@ -24,6 +24,8 @@ jobs:
       Country:
         type: string
         default: $COUNTRY
+    environment:
+      Country: "US"
     steps:
       - checkout
       - run:
@@ -186,8 +188,6 @@ workflows:
       - test-script:
           name: "Override Script"
           Name: "STG"
-          environment:
-            Country: "US"
       - tag-script:
           name: "Tag Script"
           filters:
