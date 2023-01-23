@@ -45,6 +45,15 @@ jobs:
           path: ../config-2
           destination: artifact-file2
 
+  tag-script:
+    <<: *container_medium
+    steps:
+      - checkout
+      - run:
+          name: Deploy
+          no_output_timeout: 30m
+          command: ./scripts/test.sh -p Hello -t $GROUP_NAME
+
   build-sim:
     <<: *container_medium
     environment:
@@ -174,3 +183,15 @@ workflows:
       - test-script:
           name: "Script Name"
           Name: "STG"
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - tag-script:
+          name: "Tag Script"
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
