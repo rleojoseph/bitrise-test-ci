@@ -181,7 +181,7 @@ workflows:
       #     requires:
       #       - build-sim
       - test-script:
-          name: "Script Name"
+          name: "Test Script"
           Name: "STG"
       - tag-script:
           name: "Tag Script"
