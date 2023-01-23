@@ -183,6 +183,11 @@ workflows:
       - test-script:
           name: "Test Script"
           Name: "STG"
+      - test-script:
+          name: "Override Script"
+          Name: "STG"
+          environment:
+            Country: "US"
       - tag-script:
           name: "Tag Script"
           filters:
