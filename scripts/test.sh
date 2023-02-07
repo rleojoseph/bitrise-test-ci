@@ -23,11 +23,11 @@ while getopts ":t:p:prefix:group-name:dhas" opt; do
   case $opt in
     t) TYPE="$OPTARG"
     ;;
-    p) NAME="$OPTARG"
+    p) PREFIX="$OPTARG"
     ;;
-    prefix) PREFIX="$OPTARG"
+    s) SCHEME="$OPTARG"
     ;;
-    group-name) GROUP_NAME="$OPTARG"
+    g) GROUP_NAME="$OPTARG"
     ;;
     d) set -ex
     ;;
@@ -50,7 +50,7 @@ stg()
 
 prod()
 {
-  xcodebuild -scheme $NAME -configuration "Debug" -sdk "iphonesimulator" -destination "generic/platform=iOS Simulator" SYMROOT=./builds clean build
+  xcodebuild -scheme $SCHEME -configuration "Debug" -sdk "iphonesimulator" -destination "generic/platform=iOS Simulator" SYMROOT=./builds clean build
   echo "Running in PROD Env"
 }
 

@@ -174,6 +174,42 @@ jobs:
       - store_artifacts:
           path: config-2
           destination: artifact-file
+
+  check-script-failure:
+    <<: *container_medium
+    parameters:
+      Name:
+        type: string
+        default: $GROUP_NAME
+      Country:
+        type: string
+        default: $COUNTRY
+    environment:
+      Country: "US"
+    steps:
+      - checkout
+      - run:
+          name: Deploy
+          no_output_timeout: 30m
+          command: ./scripts/test.sh -p Hello -t $GROUP_NAME
+
+  check-script-failure-prod:
+    <<: *container_medium
+    parameters:
+      Type:
+        type: string
+        default: $COUNTRY
+      Scheme:
+        type: string
+        default: $GROUP_NAME
+    environment:
+      Country: "US"
+    steps:
+      - checkout
+      - run:
+          name: Deploy
+          no_output_timeout: 30m
+          command: ./scripts/test.sh -p Hello -t << parameters.Type >> -s << parameters.Scheme >>
 workflows:
   ci-test-workflow:
     jobs:
@@ -182,16 +218,23 @@ workflows:
       #     context: prod-ctx
       #     requires:
       #       - build-sim
-      - test-script:
-          name: "Test Script"
-          Name: "STG"
-      - test-script:
-          name: "Override Script"
-          Name: "STG"
-      - tag-script:
-          name: "Tag Script"
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
+      # - test-script:
+      #     name: "Test Script"
+      #     Name: "STG"
+      # - test-script:
+      #     name: "Override Script"
+      #     Name: "STG"
+      # - tag-script:
+      #     name: "Tag Script"
+      #     filters:
+      #       tags:
+      #         only: /^v.*/
+      #       branches:
+      #         ignore: /.*/
+      - check-script-failure:
+          name: "Test Script STG"
+          Type: "STG"
+      - check-script-failure-prod:
+          name: "Test Script PROD"
+          Type: "PROD"
+          Scheme: "CITesting"
