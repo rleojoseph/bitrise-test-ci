@@ -178,12 +178,12 @@ jobs:
   check-script-failure:
     <<: *container_medium
     parameters:
-      Name:
-        type: string
-        default: $GROUP_NAME
-      Country:
+      Type:
         type: string
         default: $COUNTRY
+      Scheme:
+        type: string
+        default: $GROUP_NAME
     environment:
       Country: "US"
     steps:
@@ -191,7 +191,7 @@ jobs:
       - run:
           name: Deploy
           no_output_timeout: 30m
-          command: ./scripts/test.sh -p Hello -t $GROUP_NAME
+          command: ./scripts/test.sh -p Hello -t << parameters.Type >>
 
   check-script-failure-prod:
     <<: *container_medium
