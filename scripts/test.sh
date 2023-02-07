@@ -41,3 +41,22 @@ while getopts ":t:p:prefix:group-name:dhas" opt; do
     ;;
   esac
 done
+
+stg()
+{
+  echo "Running in Local Env"
+  xcodebuild -scheme "CITesting" -configuration "Debug" -sdk "iphonesimulator" -destination "generic/platform=iOS Simulator" SYMROOT=./builds clean build
+}
+
+prod()
+{
+  xcodebuild -scheme $NAME -configuration "Debug" -sdk "iphonesimulator" -destination "generic/platform=iOS Simulator" SYMROOT=./builds clean build
+  echo "Running in PROD Env"
+}
+
+shopt -s nocasematch
+if [[ "$TYPE" == "STG" ]]; then
+  stg
+else
+  prod
+fi

@@ -12,7 +12,7 @@ xcuserdata
 *.xcworkspace/xcuserdata
 *.playground
 build
-downloads
+build/*
 
 # Cocoapods
 Pods
@@ -31,4 +31,9 @@ Gemfile.lock
 DerivedData
 vendor/bundle
 /certificate.pem
-/SSL-pinning.xcconfig
+/Carthage
+/tmp
+/Binary
+/.build
+*.swift-e
+prebuild.log
