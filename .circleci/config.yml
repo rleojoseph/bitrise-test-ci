@@ -1,240 +1,30 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/2.0/configuration-reference
+# See: https://circleci.com/docs/configuration-reference
 version: 2.1
 
+# Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
+# See: https://circleci.com/docs/orb-intro/
 orbs:
-  node: circleci/node@4.7.0
-  gh: circleci/github-cli@1.0.4
-  macos: circleci/macos@2
-  ruby: circleci/ruby@1.2.0
+  ruby: circleci/ruby@2.0.1
 
-container_medium: &container_medium
-  macos:
-    xcode: 13.2.1
-  resource_class: medium
-
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
-
-  test-script:
-    <<: *container_medium
-    parameters:
-      Name:
-        type: string
-        default: $GROUP_NAME
-      Country:
-        type: string
-        default: $COUNTRY
-    environment:
-      Country: "US"
+  build:
+    docker:
+      - image: cimg/ruby:3.1.0
+    executor: ruby/default
     steps:
       - checkout
       - run:
-          name: Deploy
-          no_output_timeout: 30m
-          command: ./scripts/test.sh -p Hello -t $GROUP_NAME
-      - run:
-          name: Creating Dummy config
-          command: |
-            echo << parameters.Name >> > ../config-1;
-      - run:
-          name: Creating Dummy config
-          command: |
-            echo << parameters.Country >> > ../config-2;
-      - store_artifacts:
-          path: ../config-1
-          destination: artifact-file1
-      - store_artifacts:
-          path: ../config-2
-          destination: artifact-file2
+          name: Which bundler?
+          command: bundle -v
+      - ruby/install-deps
 
-  tag-script:
-    <<: *container_medium
-    steps:
-      - checkout
-      - run:
-          name: Deploy
-          no_output_timeout: 30m
-          command: ./scripts/test.sh -p Hello -t $GROUP_NAME
-
-  build-sim:
-    <<: *container_medium
-    environment:
-      FL_OUTPUT_DIR: output
-      FASTLANE_LANE: start_building
-    steps:
-      - checkout
-      - run: mkdir -p deploy-scripts
-      - run: echo $CIRCLE_BUILD_NUM
-      - run: echo $CIRCLE_PR_NUMBER
-      - run:
-          name: Build Simulator
-          command: fastlane start_building
-      - run:
-          name: Creating Dummy config
-          command: |
-            echo $TEST > ../config-1;
-      - run:
-          name: Creating Dummy config
-          command: |
-            echo $TEST_S1 > ../config-2;
-      - run:
-          name: Creating Dummy config
-          command: |
-            echo $TEST_S2 > ../config-3;
-      - run:
-          name: Creating Dummy config
-          command: |
-            echo $TEST_S3 > ../config-4;
-      - run:
-          name: Creating Dummy config
-          command: |
-            echo $TEST_S4 > ../config-5;
-      - run:
-          name: List Folders ../
-          command: ls -l ../
-      - run:
-          name: Print PWD
-          command: pwd
-      - run:
-          name: List Folders
-          command: ls -l
-      - run:
-          name: List Artifacts
-          command: ls -l artifacts
-      - run:
-          name: Remove unknown file
-          command: rm ../test.txt  || true
-      - run:
-          name: Remove Unknow file
-          when: always
-          command: rm ../test.txt || true
-      - persist_to_workspace:
-          root: .
-          paths:
-            - artifacts/*
-      - persist_to_workspace:
-          root: .
-          paths:
-            - sample/GOT.jpeg
-      - persist_to_workspace:
-          root: ../
-          paths:
-            - config-1
-      - store_artifacts:
-          path: ../config-1
-          destination: artifact-file
-      - store_artifacts:
-          path: ../config-2
-          destination: artifact-file2
-      - store_artifacts:
-          path: ../config-3
-          destination: artifact-file3
-      - store_artifacts:
-          path: ../config-4
-          destination: artifact-file4
-      - store_artifacts:
-          path: ../config-5
-          destination: artifact-file5
-  check_cache:
-    <<: *container_medium
-    steps:
-      - attach_workspace:
-          at: ./artifacts
-      - run:
-          name: Creating Dummy config
-          command: |
-            echo $TEST > config-2;
-      - run:
-          name: Print PWD
-          command: pwd
-      - run:
-          name: List Folders
-          command: ls -l
-      - run:
-          name: List Folders ../
-          command: ls -l ../
-      # - run:
-      #     name: Copy File
-      #     command: cp config-1 ../config-1
-      - run:
-          name: List Folders ../
-          command: ls -l ../
-      - run:
-          name: List Artifacts
-          command: ls -l artifacts/*
-      - run:
-          name: List sample folder
-          command: ls -l artifacts/sample
-      - run:
-          name: Remove File
-          command: rm ../config-1
-      - run:
-          name: List Folders ../
-          command: ls -l ../
-      - store_artifacts:
-          path: config-2
-          destination: artifact-file
-
-  check-script-failure:
-    <<: *container_medium
-    parameters:
-      Type:
-        type: string
-        default: $COUNTRY
-      Scheme:
-        type: string
-        default: $GROUP_NAME
-    environment:
-      Country: "US"
-    steps:
-      - checkout
-      - run:
-          name: Deploy
-          no_output_timeout: 30m
-          command: ./scripts/test.sh -p Hello -t << parameters.Type >>
-
-  check-script-failure-prod:
-    <<: *container_medium
-    parameters:
-      Type:
-        type: string
-        default: $COUNTRY
-      Scheme:
-        type: string
-        default: $GROUP_NAME
-    environment:
-      Country: "US"
-    steps:
-      - checkout
-      - run:
-          name: Deploy
-          no_output_timeout: 30m
-          command: ./scripts/test.sh -p Hello -t << parameters.Type >> -s << parameters.Scheme >>
+# Orchestrate jobs using workflows
+# See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
-  ci-test-workflow:
+  sample: # This is the name of the workflow, feel free to change it to better match your workflow.
+    # Inside the workflow, you define the jobs you want to run.
     jobs:
-      # - build-sim
-      # - check_cache:
-      #     context: prod-ctx
-      #     requires:
-      #       - build-sim
-      # - test-script:
-      #     name: "Test Script"
-      #     Name: "STG"
-      # - test-script:
-      #     name: "Override Script"
-      #     Name: "STG"
-      # - tag-script:
-      #     name: "Tag Script"
-      #     filters:
-      #       tags:
-      #         only: /^v.*/
-      #       branches:
-      #         ignore: /.*/
-      - check-script-failure:
-          name: "Test Script STG"
-          Type: "STG"
-      - check-script-failure-prod:
-          name: "Test Script PROD"
-          Type: "PROD"
-          Scheme: "CITesting"
+      - build
