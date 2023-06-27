@@ -9,4 +9,20 @@ platform :ios do
       code_coverage: true)
     publish_code_coverage
   end
+
+  lane :start_building do |options|
+
+    xcodebuild(
+      archive: true,
+      archive_path: "artifacts/CITesting.xcarchive",
+      scheme: "CITesting",
+      xcargs: "-configuration Debug -sdk 'iphonesimulator' -destination 'generic/platform=iOS Simulator' -derivedDataPath 'artifacts/derivedData'"
+    )
+
+    copy_artifacts(
+      target_path: "artifacts",
+      artifacts: ["./artifacts/CITesting.xcarchive/Products/Applications/CITesting.app","./artifacts/CITesting.xcarchive/dSYMs/CITesting.app.dSYM"]
+    )
+
+  end
 end
