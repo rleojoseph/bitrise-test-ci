@@ -23,6 +23,22 @@ platform :ios do
       target_path: "artifacts",
       artifacts: ["./artifacts/CITesting.xcarchive/Products/Applications/CITesting.app","./artifacts/CITesting.xcarchive/dSYMs/CITesting.app.dSYM"]
     )
+  end
 
+  lane :build_sim_ci do |options|
+      xcversion(version: "~> 14.1")
+      fetched_sim = sh("xcrun simctl list | grep 'Fastlane' | cat")
+      if !fetched_sim.empty?
+          sh("xcrun", "simctl", "delete", "iPhone Fastlane")
+      end
+      sh("xcrun","simctl","create","iPhone Fastlane", "com.apple.CoreSimulator.SimDeviceType.iPhone-8","com.apple.CoreSimulator.SimRuntime.iOS-15-2")
+      scan(
+        clean: true,
+        output_directory: './artifacts/unit-tests',
+        scheme: 'CITesting',
+        device: 'iPhone Fastlane',
+        code_coverage: true,
+        output_types: 'json-compilation-database,html,junit',
+        output_files: 'compile_commands.json,report.html,report.junit')
   end
 end
