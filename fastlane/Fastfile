@@ -30,8 +30,8 @@ platform :ios do
       sh("xcrun simctl list devices")
       fetched_sim = sh("xcrun simctl list | grep 'iPhone Fastlane' | cat")
       puts("~~~~~~~~~~~~~~~~~~~~~~~~")
+      puts(fetched_sim)
       puts(fetched_sim.empty?)
-      puts(fetched_sim.empty)
       sh("xcrun","simctl","create","iPhone Fastlane", "com.apple.CoreSimulator.SimDeviceType.iPhone-13","com.apple.CoreSimulator.SimRuntime.iOS-15-5")
       start_scan
   end
