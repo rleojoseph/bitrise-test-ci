@@ -29,9 +29,9 @@ platform :ios do
       xcversion(version: '14.1.0')
       sh("xcrun simctl list devices")
       fetched_sim = sh("xcrun simctl list | grep 'Fastlane' | cat")
-      console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-      console.log('fetched_sim: ', fetched_sim)
-      console.log('fetched_sim: ', fetched_sim.empty?)
+      puts('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+      puts(fetched_sim)
+      puts(fetched_sim.empty?)
       sh("xcrun","simctl","create","iPhone Fastlane", "com.apple.CoreSimulator.SimDeviceType.iPhone-13","com.apple.CoreSimulator.SimRuntime.iOS-15-5")
       scan(
         clean: true,
