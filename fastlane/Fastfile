@@ -34,11 +34,11 @@ platform :ios do
       puts(fetched_sim.empty?)
       if !fetched_sim.empty?
         puts("~~~~~~~~~~~~~~~~~~~~~~~~ DELETING ~~~~~~~~~~~~~~~~~~~~~~~~")
-        sh("xcrun", "simctl", "delete", "iPhone Fastlane")
+        sh("xcrun simctl delete iPhone Fastlane")
       end
       sleep(4)
       puts("~~~~~~~~~~~~~~~~~~~~~~~~ CREATING ~~~~~~~~~~~~~~~~~~~~~~~~")
-      sh("xcrun","simctl","create","iPhone Fastlane", "com.apple.CoreSimulator.SimDeviceType.iPhone-13","com.apple.CoreSimulator.SimRuntime.iOS-15-5")
+      sh("xcrun","simctl","create",'iPhone Fastlane', "com.apple.CoreSimulator.SimDeviceType.iPhone-13","com.apple.CoreSimulator.SimRuntime.iOS-15-5")
       start_scan
   end
   lane :start_scan do |options|
