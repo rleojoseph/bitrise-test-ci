@@ -29,6 +29,9 @@ platform :ios do
       xcversion(version: '14.1.0')
       sh("xcrun simctl list devices")
       fetched_sim = sh("xcrun simctl list | grep 'Fastlane' | cat")
+      if !fetched_sim.empty?
+          sh("xcrun", "simctl", "delete", "iPhone Fastlane")
+      end
       sh("xcrun","simctl","create","iPhone Fastlane", "com.apple.CoreSimulator.SimDeviceType.iPhone-13","com.apple.CoreSimulator.SimRuntime.iOS-15-5")
       scan(
         clean: true,
