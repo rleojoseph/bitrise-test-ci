@@ -27,6 +27,7 @@ platform :ios do
 
   lane :build_sim_ci do |options|
       xcversion(version: "~> 14.1.0")
+      sh("xcrun simctl list devices")
       fetched_sim = sh("xcrun simctl list | grep 'Fastlane' | cat")
       if !fetched_sim.empty?
           sh("xcrun", "simctl", "delete", "iPhone Fastlane")
