@@ -27,18 +27,18 @@ platform :ios do
 
   lane :build_sim_ci do |options|
       xcversion(version: '14.1.0')
-      sh("xcrun simctl list devices")
-      fetched_sim = sh("xcrun simctl list | grep 'iPhone\ Fastlane' | cat")
-      puts("~~~~~~~~~~~~~~~~~~~~~~~~")
-      puts(fetched_sim)
-      puts(fetched_sim.empty?)
-      if !fetched_sim.empty?
-        puts("~~~~~~~~~~~~~~~~~~~~~~~~ DELETING ~~~~~~~~~~~~~~~~~~~~~~~~")
-        sh("xcrun simctl delete 'iPhone\ Fastlane'")
-      end
-      sleep(4)
-      puts("~~~~~~~~~~~~~~~~~~~~~~~~ CREATING ~~~~~~~~~~~~~~~~~~~~~~~~")
-      sh("xcrun","simctl","create",'iPhone\ Fastlane', "com.apple.CoreSimulator.SimDeviceType.iPhone-13","com.apple.CoreSimulator.SimRuntime.iOS-15-5")
+      # sh("xcrun simctl list devices")
+      # fetched_sim = sh("xcrun simctl list | grep 'iPhone\ Fastlane' | cat")
+      # puts("~~~~~~~~~~~~~~~~~~~~~~~~")
+      # puts(fetched_sim)
+      # puts(fetched_sim.empty?)
+      # if !fetched_sim.empty?
+      #   puts("~~~~~~~~~~~~~~~~~~~~~~~~ DELETING ~~~~~~~~~~~~~~~~~~~~~~~~")
+      #   sh("xcrun simctl delete iPhone\ Fastlane")
+      # end
+      # sleep(4)
+      # puts("~~~~~~~~~~~~~~~~~~~~~~~~ CREATING ~~~~~~~~~~~~~~~~~~~~~~~~")
+      # sh("xcrun","simctl","create",'iPhone\ Fastlane', "com.apple.CoreSimulator.SimDeviceType.iPhone-13","com.apple.CoreSimulator.SimRuntime.iOS-15-5")
       start_scan
   end
   lane :start_scan do |options|
@@ -46,7 +46,6 @@ platform :ios do
         clean: true,
         output_directory: './artifacts/unit-tests',
         scheme: 'CITesting',
-        device: 'iPhone Fastlane',
         code_coverage: true,
         output_types: 'json-compilation-database,html,junit',
         output_files: 'compile_commands.json,report.html,report.junit')
